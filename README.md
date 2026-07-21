@@ -1,188 +1,496 @@
-# DHAAGA — Cloth Brand Web App (Django + SQLite)
+<div align="center">
 
-A full storefront for a cloth brand: product catalog, cart, checkout (cash on
-delivery), contact form, Django admin, and an AI chatbot widget on every page.
+# 🧵 DHAAGA
+### *Modern Cloth Brand E-Commerce Web Application*
 
-## What's inside
-- **shop/models.py** — Fabric, Product, Order, OrderItem, ContactMessage, ChatLog
-- **shop/views.py** — catalog, cart, checkout, contact, and `/api/chat/` endpoint
-- **shop/cart.py** — simple session-based cart (no extra packages needed)
-- **templates/shop/** — all pages, extending `base.html`
-- **static/css/style.css**, **static/js/chat.js** — styling + chatbot widget JS
-- SQLite database (`db.sqlite3`) — created automatically on first migrate
+<img src="https://img.shields.io/badge/Django-5.x-092E20?style=for-the-badge&logo=django&logoColor=white"/>
+<img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+<img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white"/>
+<img src="https://img.shields.io/badge/Bootstrap-5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white"/>
+<img src="https://img.shields.io/badge/AI-Chatbot-FF6B35?style=for-the-badge"/>
 
-## Quick Start (Development)
+**A complete Django-powered online clothing store featuring product management, shopping cart, checkout, customer contact, AI chatbot, and an intuitive admin dashboard.**
+
+</div>
+
+---
+
+# ✨ Features
+
+## 🛍️ Customer Features
+
+- 👕 Beautiful Product Catalog
+- 🧵 Fabric Categories
+- 🔍 Product Detail Pages
+- 🛒 Session-Based Shopping Cart
+- 💳 Cash on Delivery Checkout
+- 📩 Contact Form
+- 🤖 AI Chatbot on Every Page
+- 📱 Fully Responsive Design
+
+---
+
+## ⚙️ Admin Features
+
+- Manage Products
+- Manage Fabrics
+- Manage Orders
+- View Customer Messages
+- View AI Chat Logs
+- Inventory Management
+- Price Management
+- Stock Management
+
+Everything is handled directly from the **Django Admin Panel**.
+
+---
+
+# 🚀 Tech Stack
+
+| Category | Technology |
+|-----------|------------|
+| Backend | Django |
+| Language | Python |
+| Database | SQLite (Development) |
+| Production Database | PostgreSQL |
+| Frontend | HTML5, CSS3, JavaScript |
+| Static Files | WhiteNoise |
+| AI | Anthropic Claude API |
+| Environment Variables | python-dotenv |
+
+---
+
+# 📂 Project Structure
+
+```
+DHAAGA/
+│
+├── shop/
+│   ├── models.py
+│   ├── views.py
+│   ├── cart.py
+│   ├── admin.py
+│   ├── urls.py
+│   └── management/
+│       └── commands/
+│           └── seed_shop.py
+│
+├── templates/
+│   └── shop/
+│       ├── base.html
+│       ├── home.html
+│       ├── cart.html
+│       ├── checkout.html
+│       ├── contact.html
+│       └── ...
+│
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── chat.js
+│
+├── media/
+├── staticfiles/
+├── requirements.txt
+├── manage.py
+└── README.md
+```
+
+---
+
+# 🧱 Database Models
+
+The project includes the following models:
+
+| Model | Description |
+|---------|------------|
+| Fabric | Fabric categories |
+| Product | Clothing products |
+| Order | Customer orders |
+| OrderItem | Products inside orders |
+| ContactMessage | Customer inquiries |
+| ChatLog | AI chatbot conversations |
+
+---
+
+# ⚡ Quick Start
+
+## 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/yourusername/dhaaga.git
+
+cd dhaaga
+```
+
+---
+
+## 2️⃣ Create Virtual Environment
+
+### Linux / macOS
 
 ```bash
 python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-pip install -r requirements.txt
 
+source venv/bin/activate
+```
+
+### Windows
+
+```bash
+python -m venv venv
+
+venv\Scripts\activate
+```
+
+---
+
+## 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 4️⃣ Apply Database Migrations
+
+```bash
 python manage.py migrate
-python manage.py seed_shop      # adds starter fabrics + 6 products
+```
+
+---
+
+## 5️⃣ Seed Demo Data
+
+```bash
+python manage.py seed_shop
+```
+
+Adds:
+
+- Fabric Categories
+- Demo Products
+- Sample Inventory
+
+---
+
+## 6️⃣ Create Admin User
+
+```bash
 python manage.py createsuperuser
+```
+
+---
+
+## 7️⃣ Run Development Server
+
+```bash
+python manage.py runserver
+```
+
+---
+
+# 🌐 Application URLs
+
+| URL | Description |
+|------|------------|
+| http://127.0.0.1:8000 | Storefront |
+| http://127.0.0.1:8000/admin | Django Admin |
+
+---
+
+# 🔑 Demo Admin
+
+```
+Username : admin
+
+Password : dhaaga123
+```
+
+> ⚠️ **Change this password before deploying to production.**
+
+---
+
+# 🤖 AI Chatbot
+
+Every page includes an AI chatbot.
+
+Without an API key:
+
+> Friendly "Chatbot not configured yet" message
+
+With API key:
+
+- Customer support
+- Product questions
+- Order assistance
+- Chat history logging
+
+Enable it using:
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...
 
 python manage.py runserver
 ```
 
-Visit:
-- http://127.0.0.1:8000/ — storefront
-- http://127.0.0.1:8000/admin/ — manage products, orders, messages, chat logs
+---
 
-A demo admin account is already included in this build:
-- username: `admin`
-- password: `dhaaga123`
-**Change this password before deploying anywhere public.**
+# 🛒 Shopping Cart
 
-## Production Deployment
+- Session Based
+- No Login Required
+- Update Quantity
+- Remove Products
+- Persistent During Session
 
-### 1. Environment Configuration
+---
 
-Copy the example environment file and configure it for production:
+# 💳 Checkout
+
+Current payment flow:
+
+✅ Cash on Delivery
+
+Future integrations:
+
+- JazzCash
+- EasyPaisa
+- Stripe
+- PayPal
+
+---
+
+# 📩 Contact System
+
+Customers can:
+
+- Send inquiries
+- Ask questions
+- Report issues
+
+Messages are stored inside Django Admin.
+
+---
+
+# 📊 Django Admin
+
+Manage everything from one dashboard:
+
+- Products
+- Categories
+- Fabrics
+- Inventory
+- Prices
+- Orders
+- Contact Messages
+- Chat Logs
+
+No coding required.
+
+---
+
+# 🚀 Production Deployment
+
+## Configure Environment
+
+Copy environment template:
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` with production values:
-```bash
+Example:
+
+```env
 DEBUG=False
-SECRET_KEY=your-super-secret-key-here
+
+SECRET_KEY=your-secret-key
+
 ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
+
 DATABASE_URL=postgresql://user:password@localhost:5432/dhaaga_db
+
 ANTHROPIC_API_KEY=sk-ant-...
+
 SECURE_SSL_REDIRECT=True
+
 SESSION_COOKIE_SECURE=True
+
 CSRF_COOKIE_SECURE=True
 ```
 
-**Important:**
-- Generate a secure `SECRET_KEY` using: `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`
-- Set `DEBUG=False` in production
-- Use PostgreSQL instead of SQLite for production
-- Configure SSL/TLS certificates
+---
 
-### 2. Install Production Dependencies
+## Generate Secret Key
+
+```bash
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+---
+
+## Install Requirements
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Database Setup (PostgreSQL)
+---
 
-Create a PostgreSQL database:
+## Create PostgreSQL Database
+
 ```bash
 createdb dhaaga_db
 ```
 
-Update `.env` with your database credentials.
+---
 
-### 4. Collect Static Files
+## Run Migrations
+
+```bash
+python manage.py migrate
+
+python manage.py seed_shop
+```
+
+---
+
+## Collect Static Files
 
 ```bash
 python manage.py collectstatic --noinput
 ```
 
-### 5. Run Migrations
+---
+
+## Run Gunicorn
 
 ```bash
-python manage.py migrate
-python manage.py seed_shop
+gunicorn dhaaga_project.wsgi:application \
+--bind 0.0.0.0:8000 \
+--workers 3
 ```
 
-### 6. Create Superuser
+---
 
-```bash
-python manage.py createsuperuser
-```
-
-### 7. Run with Gunicorn
-
-```bash
-gunicorn dhaaga_project.wsgi:application --bind 0.0.0.0:8000 --workers 3
-```
-
-For production, consider using a process manager like systemd or supervisor.
-
-### 8. Web Server Configuration (Nginx)
-
-Example Nginx configuration:
+# 🌍 Example Nginx Configuration
 
 ```nginx
 server {
+
     listen 80;
+
     server_name yourdomain.com;
 
     location / {
+
         proxy_pass http://127.0.0.1:8000;
+
         proxy_set_header Host $host;
+
         proxy_set_header X-Real-IP $remote_addr;
+
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
         proxy_set_header X-Forwarded-Proto $scheme;
+
     }
 
     location /static/ {
-        alias /path/to/your/project/staticfiles/;
+
+        alias /path/to/project/staticfiles/;
+
     }
 
     location /media/ {
-        alias /path/to/your/project/media/;
+
+        alias /path/to/project/media/;
+
     }
+
 }
 ```
 
-### 9. SSL/TLS Configuration
+---
 
-Use Let's Encrypt for free SSL certificates:
+# 🔒 Enable HTTPS
 
-```bash
-sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
-```
-
-## Security Checklist
-
-Before deploying to production, ensure:
-
-- [ ] `DEBUG=False` in environment variables
-- [ ] Strong `SECRET_KEY` generated and set
-- [ ] `ALLOWED_HOSTS` configured with your domain
-- [ ] PostgreSQL database instead of SQLite
-- [ ] SSL/TLS enabled (HTTPS)
-- [ ] Static files collected
-- [ ] Media files properly configured
-- [ ] Firewall configured (only allow necessary ports)
-- [ ] Regular backups configured
-- [ ] Admin password changed from default
-- [ ] `ANTHROPIC_API_KEY` configured (if using chatbot)
-
-## Enabling the live chatbot
-The chat widget posts to `/api/chat/`, which calls the Anthropic API
-server-side. Without a key it replies with a friendly "not configured yet"
-message instead of failing. To turn it on:
+Using Let's Encrypt:
 
 ```bash
-export ANTHROPIC_API_KEY=sk-ant-...
-python manage.py runserver
+sudo certbot --nginx \
+-d yourdomain.com \
+-d www.yourdomain.com
 ```
 
-Chat turns are logged in the `ChatLog` model, viewable in the admin, so you
-can see what customers are asking.
+---
 
-## Managing products
-Everything (fabrics, products, stock, prices, orders, contact messages) is
-editable from `/admin/` — no code changes needed to update the catalog.
+# ✅ Production Checklist
 
-## Logging
+- [ ] DEBUG=False
+- [ ] Secure SECRET_KEY
+- [ ] PostgreSQL Database
+- [ ] HTTPS Enabled
+- [ ] Static Files Collected
+- [ ] Media Files Configured
+- [ ] Strong Admin Password
+- [ ] AI API Key Added
+- [ ] Firewall Configured
+- [ ] Backups Enabled
+- [ ] Logging Enabled
 
-Production logs are stored in `logs/django.log`. Monitor logs regularly for:
-- Application errors
-- Security issues
-- Performance bottlenecks
-- User activity
+---
 
-## Notes
-- Cart is stored in the session, so it doesn't require login.
-- Checkout is cash-on-delivery style: it just records the order; wire up a
-  payment gateway (e.g. JazzCash/EasyPaisa/Stripe) later if needed.
-- The project uses Whitenoise for static file serving in production.
-- Environment variables are loaded from `.env` file using python-dotenv.
+# 📜 Logging
+
+Logs are stored in:
+
+```
+logs/django.log
+```
+
+Monitor:
+
+- Errors
+- Security Events
+- Performance
+- User Activity
+
+---
+
+# 💡 Future Improvements
+
+- ❤️ Wishlist
+- ⭐ Product Reviews
+- 🔐 User Authentication
+- 💳 Online Payments
+- 📦 Order Tracking
+- 📧 Email Notifications
+- 🎟️ Discount Coupons
+- 📈 Sales Dashboard
+- 📱 Progressive Web App
+- 🌍 Multi-language Support
+
+---
+
+# 📌 Notes
+
+- Session-based cart (No login required)
+- Easy to manage via Django Admin
+- WhiteNoise for static file serving
+- Environment variables managed using **python-dotenv**
+- AI chatbot gracefully handles missing API keys
+- Designed for easy deployment on VPS or cloud platforms
+
+---
+
+<div align="center">
+
+## 🌟 If you like this project, don't forget to give it a ⭐ on GitHub!
+
+**Made with ❤️ using Django & Python**
+
+</div>
