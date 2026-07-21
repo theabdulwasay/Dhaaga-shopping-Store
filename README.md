@@ -494,3 +494,8 @@ Monitor:
 **Made with ❤️ using Django & Python**
 
 </div>
+<img width="1878" height="825" alt="image" src="https://github.com/user-attachments/assets/51297b39-9440-4134-ba3c-47c6e194e36b" />
+<img width="1877" height="825" alt="image" src="https://github.com/user-attachments/assets/77b5cd86-41fe-4fca-b907-4ce97dee2c7a" />
+<img width="1870" height="824" alt="image" src="https://github.com/user-attachments/assets/0ae26383-21c3-4b94-9972-4edbbeb6d574" />
+<img width="1876" height="815" alt="image" src="https://github.com/user-attachments/assets/9c5b2055-bf4d-4144-b735-8cccc38fff40" />
+
