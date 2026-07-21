@@ -1,0 +1,50 @@
+{% extends "shop/base.html" %}
+{% block title %}{{ product.name }} — DHAAGA{% endblock %}
+{% block content %}
+<section>
+  <div class="product-detail">
+    <div class="product-image">
+      <div class="swatch" style="height:420px; background:linear-gradient(165deg,{{ product.swatch_color_start }},{{ product.swatch_color_end }});">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+          <div class="no-image">No image available</div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="product-info">
+      <span class="eyebrow">{{ product.fabric.name|default:"Fabric" }}</span>
+      <h1>{{ product.name }}</h1>
+      <p class="description">{{ product.description }}</p>
+      <div class="price">PKR {{ product.price }}</div>
+      <div class="meta-info">
+        <span class="meta-item">{{ product.metres }} metres per suit</span>
+        <span class="meta-item">{{ product.stock }} in stock</span>
+      </div>
+      <div class="stock-status {% if product.in_stock %}in-stock{% else %}out-of-stock{% endif %}">
+        {% if product.in_stock %}✓ In Stock{% else %}✕ Out of Stock{% endif %}
+      </div>
+      <form method="post" action="{% url 'cart_add' product.id %}" class="add-to-cart-form">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ product.get_absolute_url }}">
+        <button class="btn primary btn-lg" type="submit" {% if not product.in_stock %}disabled{% endif %}>
+          {% if product.in_stock %}Add to cart{% else %}Out of stock{% endif %}
+        </button>
+      </form>
+      <div class="product-details">
+        <h3>Product Details</h3>
+        <ul>
+          <li><strong>Fabric:</strong> {{ product.fabric.name|default:"Various" }}</li>
+          <li><strong>Length:</strong> {{ product.metres }} metres per suit</li>
+          <li><strong>Price:</strong> PKR {{ product.price }}</li>
+          {% if product.in_stock %}
+            <li><strong>Availability:</strong> In stock ({{ product.stock }} available)</li>
+          {% else %}
+            <li><strong>Availability:</strong> Currently out of stock</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

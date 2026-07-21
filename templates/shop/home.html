@@ -1,0 +1,182 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<main class="landing-page">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">Unstitched &amp; ready-to-wear — since the loom</span>
+      <h1>Cloth cut for <em>real</em> days, not just showrooms.</h1>
+      <p class="hero-description">DHAAGA works directly with handloom weavers to bring honest fabric — lawn, khaddar, linen — to your wardrobe, without the markup of the mall.</p>
+      <div class="hero-cta">
+        <a href="{% url 'product_list' %}" class="btn primary btn-lg">View collection</a>
+        <a href="#about" class="btn btn-lg">Our story</a>
+      </div>
+      <div class="hero-badges">
+        <div class="badge">
+          <span class="badge-icon">✓</span>
+          <span>Handwoven Quality</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">✓</span>
+          <span>Ethically Sourced</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">✓</span>
+          <span>Nationwide Delivery</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="cloth-mark">
+        <div class="fold a"></div>
+        <div class="fold b"></div>
+        <div class="fold c"></div>
+        <div class="tag">NO. 04 — KHADDAR</div>
+      </div>
+      <div class="floating-elements">
+        <div class="float-item float-1">🧵</div>
+        <div class="float-item float-2">✨</div>
+        <div class="float-item float-3">🎨</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="section-head">
+      <h2>Why Choose DHAAGA?</h2>
+      <p>Fabric that tells a story — from the loom to your wardrobe.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏭</div>
+        <h3>Direct from Weavers</h3>
+        <p>We work directly with karigar families, cutting out middlemen and ensuring fair wages.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌿</div>
+        <h3>Sustainable Practices</h3>
+        <p>Traditional weaving methods that respect both craft and environment.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📏</div>
+        <h3>Premium Quality</h3>
+        <p>Each metre inspected for quality, ensuring you get only the finest fabric.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3>Paniswide Delivery</h3>
+        <p>Delivering to 7+ cities across Pakistan in 3-5 business days.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Fair Pricing</h3>
+        <p>No mall markups — honest pricing for honest fabric.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <h3>Heritage Craft</h3>
+        <p>Preserving traditional weaving techniques for future generations.</p>
+      </div>
+    </div>
+  </section>
+
+  <svg class="seam" viewBox="0 0 400 22" preserveAspectRatio="none"><line x1="0" y1="11" x2="400" y2="11" stroke="var(--line)" stroke-width="1" stroke-dasharray="6 6"/></svg>
+
+  <!-- Collection Section -->
+  <section id="collection" class="collection-section">
+    <div class="section-head">
+      <h2>This Season's Weave</h2>
+      <p>Fresh off the loom, picked for the heat, the cold, and everything Punjab throws in between.</p>
+    </div>
+    <div class="grid">
+      {% for product in products %}
+      <div class="card">
+        <div class="swatch" style="background:linear-gradient(165deg,{{ product.swatch_color_start }},{{ product.swatch_color_end }});">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+          {% else %}
+            <div class="no-image">{{ product.name }}</div>
+          {% endif %}
+          {% if not product.in_stock %}
+            <div class="out-of-stock-badge">Out of Stock</div>
+          {% endif %}
+        </div>
+        <div class="card-body">
+          <a href="{{ product.get_absolute_url }}"><div class="name">{{ product.name }}</div></a>
+          <div class="desc">{{ product.description|truncatewords:14 }}</div>
+          <div class="card-footer">
+            <div class="price">PKR {{ product.price }}</div>
+            <div class="fabric-type">{{ product.fabric.name|default:"Various" }}</div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="empty-state">No products yet — add some from the Django admin.</p>
+      {% endfor %}
+    </div>
+    <div class="section-cta">
+      <a href="{% url 'product_list' %}" class="btn primary btn-lg">View Full Collection</a>
+    </div>
+  </section>
+
+  <svg class="seam" viewBox="0 0 400 22" preserveAspectRatio="none"><line x1="0" y1="11" x2="400" y2="11" stroke="var(--line)" stroke-width="1" stroke-dasharray="6 6"/></svg>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="about">
+      <div class="loom">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="wg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E0A23D"/><stop offset="1" stop-color="#B23A2E"/></linearGradient></defs>
+          <g stroke="url(#wg)" stroke-width="2" opacity="0.85">
+            <line x1="0" y1="20" x2="300" y2="20"/><line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="80" x2="300" y2="80"/>
+            <line x1="0" y1="110" x2="300" y2="110"/><line x1="0" y1="140" x2="300" y2="140"/><line x1="0" y1="170" x2="300" y2="170"/><line x1="0" y1="200" x2="300" y2="200"/>
+          </g>
+          <g stroke="#F2ECE0" stroke-width="2" opacity="0.35">
+            <line x1="30" y1="0" x2="30" y2="220"/><line x1="70" y1="0" x2="70" y2="220"/><line x1="110" y1="0" x2="110" y2="220"/>
+            <line x1="150" y1="0" x2="150" y2="220"/><line x1="190" y1="0" x2="190" y2="220"/><line x1="230" y1="0" x2="230" y2="220"/><line x1="270" y1="0" x2="270" y2="220"/>
+          </g>
+        </svg>
+      </div>
+      <div class="about-content">
+        <span class="eyebrow">About DHAAGA</span>
+        <h2>Every metre traced back to one karigar.</h2>
+        <p class="about-description">We started with a single loom in a small workshop, weaving khaddar the way it's been done for generations. No fast-fashion offcuts, no unnamed factories — just cloth you can trace back to the hands that made it.</p>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="num">120+</div>
+            <div class="label">Weaver families</div>
+          </div>
+          <div class="stat">
+            <div class="num">4.8</div>
+            <div class="label">Customer rating</div>
+          </div>
+          <div class="stat">
+            <div class="num">7</div>
+            <div class="label">Cities delivered to</div>
+          </div>
+          <div class="stat">
+            <div class="num">5K+</div>
+            <div class="label">Happy customers</div>
+          </div>
+        </div>
+        <div class="about-cta">
+          <a href="{% url 'contact' %}" class="btn primary">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Ready to experience authentic handwoven fabric?</h2>
+      <p>Join thousands of satisfied customers across Pakistan who have made DHAAGA their trusted fabric destination.</p>
+      <div class="cta-buttons">
+        <a href="{% url 'product_list' %}" class="btn primary btn-lg">Shop Now</a>
+        <a href="{% url 'order_track' %}" class="btn btn-lg">Track Order</a>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

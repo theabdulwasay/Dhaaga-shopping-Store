@@ -1,0 +1,72 @@
+{% extends "shop/base.html" %}
+{% block title %}Your cart — DHAAGA{% endblock %}
+{% block content %}
+<section class="cart-page">
+  <div class="section-head">
+    <h2>Your cart</h2>
+    <p>{% if cart|length > 0 %}{{ cart|length }} item(s) in your cart{% else %}Your cart is empty{% endif %}</p>
+  </div>
+  {% if cart|length == 0 %}
+    <div class="empty-cart">
+      <div class="empty-icon">🛒</div>
+      <h3>Your cart is empty</h3>
+      <p>Browse our collection and add some beautiful fabrics to your cart.</p>
+      <a href="{% url 'product_list' %}" class="btn primary">Browse collection</a>
+    </div>
+  {% else %}
+  <div class="cart-container">
+    <div class="cart-items">
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+            <tr>
+              <td class="product-cell">
+                <div class="product-name">{{ item.product.name }}</div>
+                <div class="product-fabric">{{ item.product.fabric.name|default:"Various" }}</div>
+              </td>
+              <td class="price-cell">PKR {{ item.price }}</td>
+              <td class="quantity-cell">{{ item.quantity }}</td>
+              <td class="subtotal-cell">PKR {{ item.subtotal }}</td>
+              <td class="remove-cell">
+                <form method="post" action="{% url 'cart_remove' item.product.id %}">
+                  {% csrf_token %}
+                  <button class="btn btn-danger btn-sm" type="submit" title="Remove item">✕</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="cart-summary">
+      <div class="summary-card">
+        <h3>Order Summary</h3>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>PKR {{ cart.get_total }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Delivery</span>
+          <span>Free</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>PKR {{ cart.get_total }}</span>
+        </div>
+        <a href="{% url 'checkout' %}" class="btn primary btn-block">Proceed to checkout</a>
+        <a href="{% url 'product_list' %}" class="btn btn-block">Continue shopping</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

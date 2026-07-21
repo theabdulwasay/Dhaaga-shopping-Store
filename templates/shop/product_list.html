@@ -1,0 +1,39 @@
+{% extends "shop/base.html" %}
+{% block title %}Collection — DHAAGA{% endblock %}
+{% block content %}
+<section>
+  <div class="section-head">
+    <h2>Full collection</h2>
+    <p>Filter by fabric to find your weave.</p>
+  </div>
+  <div class="fabric-filter">
+    <a href="{% url 'product_list' %}" class="{% if not active_fabric %}active{% endif %}">All</a>
+    {% for f in fabrics %}
+      <a href="?fabric={{ f.slug }}" class="{% if active_fabric == f.slug %}active{% endif %}">{{ f.name }}</a>
+    {% endfor %}
+  </div>
+  <div class="grid">
+    {% for product in products %}
+    <div class="card">
+      <div class="swatch" style="background:linear-gradient(165deg,{{ product.swatch_color_start }},{{ product.swatch_color_end }});">
+        {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}">{% endif %}
+      </div>
+      <div class="card-body">
+        <a href="{{ product.get_absolute_url }}"><div class="name">{{ product.name }}</div></a>
+        <div class="desc">{{ product.description|truncatewords:14 }}</div>
+        <div class="price">PKR {{ product.price }}</div>
+        <form method="post" action="{% url 'cart_add' product.id %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{% url 'product_list' %}">
+          <button class="btn primary" style="width:100%; padding:10px;" type="submit" {% if not product.in_stock %}disabled{% endif %}>
+            {% if product.in_stock %}Add to cart{% else %}Out of stock{% endif %}
+          </button>
+        </form>
+      </div>
+    </div>
+    {% empty %}
+    <p class="empty-state">No products found for this filter.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

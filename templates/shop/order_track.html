@@ -1,0 +1,100 @@
+{% extends "shop/base.html" %}
+{% block title %}Track Order — DHAAGA{% endblock %}
+{% block content %}
+<section class="order-track-page">
+  <div class="section-head">
+    <h2>Track Your Order</h2>
+    <p>Enter your order ID to see the current status of your delivery.</p>
+  </div>
+  
+  <div class="track-search">
+    <form method="get" class="track-form">
+      <input type="text" name="order_id" placeholder="Enter your Order ID (e.g., 123)" value="{{ request.GET.order_id }}" class="track-input">
+      <button type="submit" class="btn primary">Track Order</button>
+    </form>
+  </div>
+  
+  {% if order %}
+  <div class="track-result">
+    <div class="order-header">
+      <h3>Order #{{ order.id }}</h3>
+      <span class="status-badge {{ order.status }}">{{ order.get_status_display }}</span>
+    </div>
+    
+    <div class="order-info-grid">
+      <div class="info-box">
+        <strong>Customer</strong>
+        <p>{{ order.full_name }}</p>
+      </div>
+      <div class="info-box">
+        <strong>Delivery to</strong>
+        <p>{{ order.city }}</p>
+      </div>
+      <div class="info-box">
+        <strong>Order Date</strong>
+        <p>{{ order.created_at|date:"F j, Y" }}</p>
+      </div>
+      <div class="info-box">
+        <strong>Total</strong>
+        <p>PKR {{ order.total }}</p>
+      </div>
+    </div>
+    
+    <div class="timeline-card">
+      <h3>Order Status Timeline</h3>
+      <div class="timeline">
+        <div class="timeline-item {% if order.status == 'pending' or order.status == 'confirmed' or order.status == 'shipped' or order.status == 'delivered' %}completed{% endif %}">
+          <div class="timeline-dot">✓</div>
+          <div class="timeline-content">
+            <strong>Order Confirmed</strong>
+            <p>Your order has been received and is being processed.</p>
+          </div>
+        </div>
+        <div class="timeline-item {% if order.status == 'confirmed' or order.status == 'shipped' or order.status == 'delivered' %}completed{% endif %}">
+          <div class="timeline-dot">2</div>
+          <div class="timeline-content">
+            <strong>Order Processing</strong>
+            <p>We're preparing your fabric for shipment.</p>
+          </div>
+        </div>
+        <div class="timeline-item {% if order.status == 'shipped' or order.status == 'delivered' %}completed{% endif %}">
+          <div class="timeline-dot">3</div>
+          <div class="timeline-content">
+            <strong>Shipped</strong>
+            <p>Your order is on its way to {{ order.city }}.</p>
+          </div>
+        </div>
+        <div class="timeline-item {% if order.status == 'delivered' %}completed{% endif %}">
+          <div class="timeline-dot">4</div>
+          <div class="timeline-content">
+            <strong>Delivered</strong>
+            <p>Order has been delivered successfully.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="order-items-card">
+      <h3>Order Items</h3>
+      <div class="order-items-list">
+        {% for item in order.items.all %}
+        <div class="order-item">
+          <div class="item-info">
+            <div class="item-name">{{ item.product.name }}</div>
+            <div class="item-qty">{{ item.quantity }} x PKR {{ item.unit_price }}</div>
+          </div>
+          <div class="item-total">PKR {{ item.subtotal }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% elif request.GET.order_id %}
+  <div class="no-order">
+    <div class="no-order-icon">🔍</div>
+    <h3>No order found</h3>
+    <p>We couldn't find an order with ID "{{ request.GET.order_id }}". Please check your order ID and try again.</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

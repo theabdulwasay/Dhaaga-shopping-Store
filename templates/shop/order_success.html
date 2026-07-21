@@ -1,0 +1,89 @@
+{% extends "shop/base.html" %}
+{% block title %}Order placed — DHAAGA{% endblock %}
+{% block content %}
+<section class="order-success-page">
+  <div class="success-container">
+    <div class="success-icon">✓</div>
+    <h1>Order #{{ order.id }} confirmed!</h1>
+    <p class="success-message">Thanks, {{ order.full_name }} — we've received your order and will contact you on {{ order.phone }} to confirm delivery to {{ order.city }}.</p>
+    
+    <div class="order-summary-card">
+      <h3>Order Details</h3>
+      <div class="summary-row">
+        <span>Order ID</span>
+        <span>#{{ order.id }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Status</span>
+        <span class="status-badge {{ order.status }}">{{ order.get_status_display }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Delivery to</span>
+        <span>{{ order.city }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Order Date</span>
+        <span>{{ order.created_at|date:"F j, Y" }}</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>PKR {{ order.total }}</span>
+      </div>
+    </div>
+    
+    <div class="order-items-card">
+      <h3>Items in your order</h3>
+      <div class="order-items-list">
+        {% for item in order.items.all %}
+        <div class="order-item">
+          <div class="item-info">
+            <div class="item-name">{{ item.product.name }}</div>
+            <div class="item-qty">{{ item.quantity }} x PKR {{ item.unit_price }}</div>
+          </div>
+          <div class="item-total">PKR {{ item.subtotal }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="delivery-info-card">
+      <h3>📦 What happens next?</h3>
+      <div class="timeline">
+        <div class="timeline-item completed">
+          <div class="timeline-dot">✓</div>
+          <div class="timeline-content">
+            <strong>Order Confirmed</strong>
+            <p>Your order has been received and is being processed.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <div class="timeline-content">
+            <strong>Order Processing</strong>
+            <p>We'll prepare your fabric for shipment (1-2 business days).</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <div class="timeline-content">
+            <strong>Shipped</strong>
+            <p>Your order will be shipped to {{ order.city }} (3-5 business days).</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">4</div>
+          <div class="timeline-content">
+            <strong>Delivered</strong>
+            <p>Pay cash on delivery when your fabric arrives.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="success-actions">
+      <a href="{% url 'product_list' %}" class="btn primary btn-lg">Continue shopping</a>
+      <a href="{% url 'contact' %}" class="btn">Contact support</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

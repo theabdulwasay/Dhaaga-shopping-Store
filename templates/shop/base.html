@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}DHAAGA — Woven for the everyday{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="logo" href="{% url 'home' %}">DH<span>Ā</span>AGA</a>
+    <ul>
+      <li><a href="{% url 'product_list' %}">Collection</a></li>
+      <li><a href="{% url 'home' %}#about">About</a></li>
+      <li><a href="{% url 'order_track' %}">Track Order</a></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+      <li><a href="{% url 'cart_detail' %}">Cart{% if cart_count %} <span class="cart-count">{{ cart_count }}</span>{% endif %}</a></li>
+    </ul>
+    <button class="btn primary" style="padding:10px 20px;" onclick="document.getElementById('chat-launcher').click()">Ask us</button>
+  </nav>
+</header>
+
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+</ul>
+{% endif %}
+
+<svg class="seam" viewBox="0 0 400 22" preserveAspectRatio="none"><line x1="0" y1="11" x2="400" y2="11" stroke="var(--line)" stroke-width="1" stroke-dasharray="6 6"/></svg>
+
+{% block content %}{% endblock %}
+
+<footer id="contact-footer">
+  <div class="footer-inner">
+    <div class="logo" style="font-size:1.1rem;">DH<span>Ā</span>AGA</div>
+    <p>Hazro City, Punjab, Pakistan — orders@dhaaga.example · +92 300 0000000</p>
+  </div>
+</footer>
+
+<button id="chat-launcher" aria-label="Open chat with DHAAGA support">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.35 0-2.63-.32-3.75-.9L3 21l1.9-5.75A8.47 8.47 0 0 1 3.5 11.5 8.5 8.5 0 0 1 12 3a8.5 8.5 0 0 1 9 8.5z"/></svg>
+</button>
+
+<div id="chat-panel">
+  <div class="chat-head">
+    <div>
+      <div class="title">DHAAGA Assist</div>
+      <div class="sub">fabric &amp; order questions</div>
+    </div>
+    <button id="chat-close" aria-label="Close chat">✕</button>
+  </div>
+  <div id="chat-log"></div>
+  <form id="chat-form">
+    {% csrf_token %}
+    <input id="chat-input" type="text" placeholder="Ask about fabric, sizing, delivery..." autocomplete="off" />
+    <button id="chat-send" type="submit" aria-label="Send">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+    </button>
+  </form>
+</div>
+
+<script src="{% static 'js/chat.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>
